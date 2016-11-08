@@ -1,0 +1,11 @@
+[
+	{
+		"src": ["src/img/node.png"],
+		"format": "jpg",
+		"width": 800,
+		"height": 800,
+		"crop": false,
+		"upscale": false,
+		"suffix": "-small"
+	}
+]

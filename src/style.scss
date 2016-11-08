@@ -1,0 +1,16 @@
+// Normalize
+@import 'node_modules/normalize-css/normalize';
+@import 'style/microsoft';
+@import 'style/touch';
+
+// Boilerplate test, remove for production!
+body{
+	&:before{
+		content: 'CSS file ran successfully!';
+	}
+	&:before, .test{
+		display: block;
+		margin: 50px;
+		text-align: center;
+	}
+}

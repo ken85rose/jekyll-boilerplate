@@ -1,0 +1,106 @@
+// Media queries for Microsoft browsers
+
+
+
+
+// All Internet Explorer versions
+@media \0screen\,screen\9, screen and (min-width:0\0) and (min-resolution: +72dpi){
+
+	// X icon inside input elements
+	input{
+		&::-ms-clear{
+			display: none;
+		}
+	}
+}
+
+// All Edge versions
+@supports (-ms-ime-align:auto){
+
+	// X icon inside input elements
+	input{
+		&::-ms-clear{
+			display: none;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+// Internet Explorer 11 and above
+_:-ms-fullscreen{
+
+}
+
+// Internet Explorer 10
+_:-ms-lang(x){
+
+}
+
+// Internet Explorer 9 and 10
+@media screen and (min-width:0\0) {
+
+}
+
+// Internet Explorer 10 and above
+_:-ms-lang(x){
+
+}
+
+// Internet Explorer 9 and above
+@media screen and (min-width:0\0) and (min-resolution: +72dpi){
+
+}
+
+// Internet Explorer 9
+@media screen and (min-width:0\0) and (min-resolution: .001dpcm){ 
+
+}
+
+// Internet Explorer 8, 9, and 10
+@media screen\0{
+
+}
+
+// Internet Explorer 8
+html>/**/body{
+
+}
+
+// Internet Explorer 6, 7, and 8
+@media \0screen\,screen\9{
+
+}
+
+// Internet Explorer 6 and 7
+@media screen\9{
+
+}
+
+// Internet Explorer 7
+*+html{
+
+}
+
+// Internet Explorer 6
+* html{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
