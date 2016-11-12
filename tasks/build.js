@@ -1,10 +1,10 @@
 // Builds from src to dist or from dist to build
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 
 
 	// Clears, then builds dist folder
-	gulp.task('dist', function(cb){
+	gulp.task('dist', cb => {
 		const runSequence = require('run-sequence')
 		runSequence(
 			'undist',
@@ -20,11 +20,11 @@ module.exports = function(gulp, config){
 
 
 	// Clear dist folder
-	gulp.task('undist', function(){
+	gulp.task('undist', () => {
 		const del = require('del')
-		const vinylPaths = require('vinyl-paths')
+		const paths = require('vinyl-paths')
 		return gulp.src(config.dist)
-			.pipe(vinylPaths(del))
+			.pipe(paths(del))
 	})
 
 

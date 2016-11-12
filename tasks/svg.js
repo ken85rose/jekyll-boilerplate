@@ -1,10 +1,10 @@
 // Minifies and creates SVG maps
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 	const plumber = require('gulp-plumber')
 
 	// Minify and map SVGs
-	gulp.task('svg:map', function(){
+	gulp.task('svg:map', () => {
 		const svgMin = require('gulp-svgmin')
 		const svgStore = require('gulp-svgstore')
 		const rename = require('gulp-rename')
@@ -14,7 +14,7 @@ module.exports = function(gulp, config){
 			.pipe(plumber(config.onError))
 
 			// Minify and give each sprite an ID that matches its filename
-			.pipe(svgMin(function(file) {
+			.pipe(svgMin(file => {
 				let prefix = path.basename(file.relative, path.extname(file.relative));
 				return {
 					plugins: [{
@@ -27,7 +27,7 @@ module.exports = function(gulp, config){
 			}))
 
 			// Get directory name
-			.pipe(rename(function(path){
+			.pipe(rename(path => {
 				dirName = path.dirname.replace(config.svgMapPrefix, '')
 			}))
 
@@ -35,7 +35,7 @@ module.exports = function(gulp, config){
 			.pipe(svgStore())
 
 			// Rename map to directory name without prefix
-			.pipe(rename(function(path){
+			.pipe(rename(path => {
 				path.basename = dirName
 			}))
 
@@ -44,7 +44,7 @@ module.exports = function(gulp, config){
 	})
 
 	// Minify non-map SVGs
-	gulp.task('svg:min', function(){
+	gulp.task('svg:min', () => {
 		const svgMin = require('gulp-svgmin')
 		const changed = require('gulp-changed')
 		return gulp.src([

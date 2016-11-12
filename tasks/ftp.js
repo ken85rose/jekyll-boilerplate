@@ -1,6 +1,6 @@
 // Deploys changed files via FTP
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 
 	const vinylFtp = require('vinyl-ftp')
 	const gitignoreGlobs = require('gitignore-globs')
@@ -26,7 +26,7 @@ module.exports = function(gulp, config){
 	}
 
 
-	gulp.task('ftp', function(){
+	gulp.task('ftp', () => {
 
 		// Glob files to upload
 		let files

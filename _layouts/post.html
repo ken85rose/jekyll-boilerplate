@@ -3,11 +3,6 @@ layout: default
 ---
 <article>
 	<h1>{{ page.title | escape }}</h1>
-	<div class="entry">{{ content }}</div>
-	<small>
-		<time></time>
-	</small>
-	{% if site.disqus.shortname %}
-		{% include disqus_comments.html %}
-	{% endif %}
+	<div>{{ content }}</div>
+	<small>{{ page.date | date: "%m/%d/%Y %I:%M%p" }}</small>
 </article>

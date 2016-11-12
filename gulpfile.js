@@ -1,4 +1,9 @@
 'use strict'
+const gulp = require('gulp')
+const dotenv = require('dotenv')
+const notify = require('gulp-notify')
+const globAll = require('glob-all')
+const util = require('gulp-util')
 
 // Load options
 let _config = require('./config.js')
@@ -8,14 +13,8 @@ for(i in _config){
 	config[i] = _config[i]
 }
 
-// Require modules
-const gulp = require('gulp')
-const camelcase = require('camelcase')
-const dotenv = require('dotenv')
-const notify = require('gulp-notify')
-const globAll = require('glob-all')
-const util = require('gulp-util')
-config.notify = function(msg){
+// Notifications after tasks
+config.notify = msg => {
 	return notify({
 		message: msg,
 		onLast: true
@@ -24,9 +23,6 @@ config.notify = function(msg){
 
 // Get configurable environment variables
 dotenv.config({ silent: true })
-
-// Get camelcase version of name
-//const camelName = camelcase(config.package.name)
 
 // Error handler
 config.onError = {
@@ -49,20 +45,13 @@ for(i = 0; i < files.length; i++){
 }
 
 // Test for errors
-gulp.task('test', function(cb){
+gulp.task('test', cb => {
 	cb()
 })
 
 
 // Prevent errors from ending watch or other tasks
 process.on('uncaughtException', console.error.bind(console))
-
-
-
-
-
-
-
 
 
 

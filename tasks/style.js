@@ -1,9 +1,9 @@
 // Preprocesses Sass for development and production
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 
 	// Transpile Sass
-	gulp.task('style', function(){
+	gulp.task('style', () => {
 
 		const sourcemaps = require('gulp-sourcemaps')
 		const sass = require('gulp-sass')

@@ -1,6 +1,6 @@
 // Preprocesses and copies images
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 	const plumber = require('gulp-plumber')
 
 	let imgConfig = []
@@ -34,15 +34,15 @@ module.exports = function(gulp, config){
 			imgData.imageMagick = true
 			streams[i] = gulp.src(imgData.src)
 				.pipe(plumber(config.onError))
-				.pipe(gulpIf(('suffix' in imgData), rename(function(path){
+				.pipe(gulpIf(('suffix' in imgData), rename(path => {
 					path.basename += imgData.suffix
 					delete imgData.suffix
 				})))
-				.pipe(gulpIf(('prefix' in imgData), rename(function(path){
+				.pipe(gulpIf(('prefix' in imgData), rename(path => {
 					path.basename = `${imgData.prefix}${path.basename}`
 					delete imgData.prefix
 				})))
-				.pipe(gulpIf(('rename' in imgData), rename(function(path){
+				.pipe(gulpIf(('rename' in imgData), rename(path => {
 					path.basename = imgData.rename
 					delete imgData.rename
 				})))
@@ -51,13 +51,10 @@ module.exports = function(gulp, config){
 		})
 
 
-
 		// Merge streams & minify
 		return merge(streams)
 			.pipe(imageMin())
 			.pipe(gulp.dest(`${config.dist}/${config.img}`))
-
-
 
 
 	})

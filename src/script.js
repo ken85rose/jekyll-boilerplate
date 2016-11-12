@@ -16,11 +16,4 @@ if('querySelector' in document && 'localStorage' in window && 'addEventListener'
 	// Touch-screen specific code
 	require('./script/touch')()
 
-	// Boilerplate test
-	let el = document.createElement('div')
-	el.className = 'test'
-	el.innerText = 'JavaScript file ran successfully!'
-	document.body.appendChild(el)
-	console.log('main.js loaded!')
-
 }

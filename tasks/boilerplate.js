@@ -1,13 +1,13 @@
 // Push to or pull from boilerplate repo
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 	const shell = require('gulp-shell')
 	const vinylPaths = require('vinyl-paths')
 	const jsonEditor = require('gulp-json-editor')
 	const runSequence = require('run-sequence')
 	const fs = require('fs')
 
-	//const boilerplateRepo = 'https://github.com/smarter-js/smarter-website-boilerplate.git'
+	const boilerplateRepo = 'https://github.com/ken85rose/jekyll-gulp-boilerplate.git'
 	const shellOpt = {
 		verbose: true
 	}
@@ -20,12 +20,12 @@ module.exports = function(gulp, config){
 
 	// Update to latest boilerplate
 	// Clone boilerplate to temp directory
-	gulp.task('boilerplate:clone', function(){
+	gulp.task('boilerplate:clone', () => {
 		return gulp.src('')
 			.pipe(shell(`git clone "${boilerplateRepo}" temp`, shellOpt))
 	})
 	// Clean dependencies and task files
-	gulp.task('boilerplate:preclean', function(){
+	gulp.task('boilerplate:preclean', () => {
 		return gulp.src([
 				'node_modules',
 				'bower_components',
@@ -34,7 +34,7 @@ module.exports = function(gulp, config){
 			.pipe(vinylPaths(del))
 	})
 	// Copy relevent files from boilerplate repo
-	gulp.task('boilerplate:copyfromtemp', function(){
+	gulp.task('boilerplate:copyfromtemp', () => {
 		return gulp.src([
 				'temp/**/*',
 				'!temp/.git',
@@ -47,17 +47,17 @@ module.exports = function(gulp, config){
 			.pipe(gulp.dest('./'))
 	})
 	// Delete temp boilerplate directory
-	gulp.task('boilerplate:postclean', function(){
+	gulp.task('boilerplate:postclean', () => {
 		return gulp.src('temp')
 			.pipe(vinylPaths(del))
 	})
 	// Update settings with project info
-	gulp.task('boilerplate:settings', function(){
+	gulp.task('boilerplate:settings', () => {
 		return gulp.src([
 				'./package.json',
 				'./bower.json'
 			])
-			.pipe(jsonEditor(function(json){
+			.pipe(jsonEditor(json => {
 				json.name = config.package.name
 				json.title = config.package.title
 				json.description = config.package.description
@@ -66,7 +66,7 @@ module.exports = function(gulp, config){
 			.pipe(gulp.dest('./'))
 	})
 	// Install new dependencies
-	gulp.task('boilerplate:install', function(){
+	gulp.task('boilerplate:install', () => {
 		return gulp.src('')
 			.pipe(shell('npm install', shellOpt))
 			.pipe(shell('bower install', shellOpt))
@@ -74,7 +74,7 @@ module.exports = function(gulp, config){
 
 
 	// Pull!
-	gulp.task('boilerplate:pull', function(cb){
+	gulp.task('boilerplate:pull', cb => {
 		runSequence(
 			['boilerplate:clone', 'boilerplate:preclean'],
 			'boilerplate:copyfromtemp',
@@ -87,7 +87,7 @@ module.exports = function(gulp, config){
 
 
 	// Delete tasks from boilerplate repo
-	gulp.task('boilerplate:deleterepofiles', function(){
+	gulp.task('boilerplate:deleterepofiles', () => {
 		return gulp.src([
 				'temp/tasks',
 				'temp/src'
@@ -96,24 +96,24 @@ module.exports = function(gulp, config){
 	})
 
 	// Copy relevent files to boilerplate repo
-	gulp.task('boilerplate:copytotemp', function(){
+	gulp.task('boilerplate:copytotemp', () => {
 		return gulp.src([
 				'gulpfile.js',
 				'.gitignore'
 			])
 			.pipe(gulp.dest('./temp/'))
 	})
-	gulp.task('boilerplate:copytotemptasks', function(){
+	gulp.task('boilerplate:copytotemptasks', () => {
 		return gulp.src('tasks/**/*')
 			.pipe(gulp.dest('temp/tasks'))
 	})
-	gulp.task('boilerplate:copytotempsrc', function(){
+	gulp.task('boilerplate:copytotempsrc', () => {
 		return gulp.src('src/**/*')
 			.pipe(gulp.dest('temp/src'))
 	})
 
 	// Copy dependencies to json files
-	gulp.task('boilerplate:copypackage', function(cb){
+	gulp.task('boilerplate:copypackage', cb => {
 		fs.readFile('./package.json', 'utf8', (err, data) => {
 			if(err){
 				throw err
@@ -128,7 +128,7 @@ module.exports = function(gulp, config){
 				.on('end', cb)
 		})
 	})
-	gulp.task('boilerplate:pushrepo', function(){
+	gulp.task('boilerplate:pushrepo', () => {
 		return gulp.src('')
 			.pipe(shell('git add .', shellTempOpt))
 			.pipe(shell(`git commit -m "Updates from ${config.package.title}"`, shellTempOpt))
@@ -137,7 +137,7 @@ module.exports = function(gulp, config){
 
 
 	// Push!
-	gulp.task('boilerplate:push', function(cb){
+	gulp.task('boilerplate:push', cb => {
 		runSequence(
 			'boilerplate:clone',
 			'boilerplate:deleterepofiles',

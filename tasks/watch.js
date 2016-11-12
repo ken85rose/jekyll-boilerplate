@@ -1,10 +1,10 @@
 // Controls file watching & live reload
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 
 
 	// Watches files for changes
-	gulp.task('watch', function(){
+	gulp.task('watch', () => {
 
 		// Process source files when changed
 		gulp.watch(`${config.src}/**/*.scss`, ['style'])
@@ -14,41 +14,49 @@ module.exports = function(gulp, config){
 
 		// Watch markdown for Jekyll builds
 		gulp.watch([
-			'**/*.md',
+			'**/*.{md,markdown}',
 			'_layouts/*.html',
 			'_config.yml',
-			'!_drafts/*.md'
-		], ['jekyll'])
+			'!_drafts/*.{md,markdown}'
+		], ['jekyll:build'])
+
+		// Watch for gem changes
+		gulp.watch('Gemfile', ['jekyll'])
 
 		// Reload browser on file changes
-		gulp.watch(`${config.dist}/**/*.{html,js,svg,jpg,gif,png}`, config.browserSync.reload)
+		gulp.watch(`${config.dist}/**/*.{html,js,svg,jpg,jpeg,gif,png}`, config.browserSync.reload)
 
-		// Reload Gulp on task changes
-		gulp.watch([
-			'gulpfile.js',
-			`${config.tasks}/**/*.js`
-		], ['gulp-reload'])
+
+
 
 	})
 
 
 	// Watch and browser sync tasks
-	gulp.task('default', function(cb){
+	gulp.task('default', cb => {
 		const runSequence = require('run-sequence')
-		runSequence('build', ['sync', 'watch'], cb)
+		runSequence('build', ['sync-watch'], cb)
 	})
 
 	// Browser sync and watch files
-	gulp.task('sync-watch', ['sync', 'watch'])
-	gulp.task('watch-sync', ['sync', 'watch'])
+	gulp.task('sync-watch', ['sync', 'watch', 'auto-reload'])
+	gulp.task('watch-sync', ['sync-watch'])
 
-	// Reloads gulp after task changes
-	gulp.task('gulp-reload', function(){
-		console.log('Gulp reloaded!')
-		let spawn = require('child_process').spawn
-		spawn('gulp', ['sync-watch'], { stdio: 'inherit' })
-		process.exit()
+
+	gulp.task('auto-reload', function() {
+		let p
+		// Reload Gulp on task changes
+		gulp.watch([
+			'gulpfile.js',
+			`${config.tasks}/**/*.js`
+		], spawnChildren)
+		spawnChildren()
+
+		function spawnChildren(e) {
+			const spawn = require('child_process').spawn
+			if(p) p.kill()
+			p = spawn('gulp', ['watch'], {stdio: 'inherit'})
+		}
+
 	})
-
-
 }

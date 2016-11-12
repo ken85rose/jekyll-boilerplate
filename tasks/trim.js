@@ -1,10 +1,10 @@
 // List all plugin names
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 
 
 	// Trims out bower, node module, dist, git, and demo folders	
-	gulp.task('trim', function(cb){
+	gulp.task('trim', cb => {
 		const vinylPaths = require('vinyl-paths')
 		const del = require('del')
 		let src = [

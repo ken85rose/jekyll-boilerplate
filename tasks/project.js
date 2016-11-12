@@ -1,6 +1,6 @@
 // Change project settings
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 	const plumber = require('gulp-plumber')
 	const jsonEditor = require('gulp-json-editor')
 	const vinylPaths = require('vinyl-paths')
@@ -50,7 +50,6 @@ module.exports = function(gulp, config){
 		obj.camel = obj.title.replace(regSpace, '')
 		obj.camel = obj.camel.charAt(0).toLowerCase() + obj.camel.slice(1)
 
-
 		return obj
 	}
 
@@ -70,13 +69,12 @@ module.exports = function(gulp, config){
 		let oldCamel = new RegExp(camelize(config.package.name), 'g'),
 			oldTitle = new RegExp(config.package.title, 'g')
 
-
 		return gulp.src([
 				'./package.json',
 				'./bower.json'
 			])
 			.pipe(plumber(config.onError))
-			.pipe(jsonEditor(function(json){
+			.pipe(jsonEditor(json => {
 				json.name = obj.name
 				json.title = obj.title
 				return json
@@ -87,12 +85,12 @@ module.exports = function(gulp, config){
 
 
 	// Change name of project
-	gulp.task('name', function(){
+	gulp.task('name', () => {
 		return rename(process.argv[process.argv.length - 1])
 	})
 	gulp.task('rename', ['name'])
 
-	gulp.task('selfname', function(){
+	gulp.task('selfname', () => {
 		let name = __dirname.split('/')
 		name = name[name.length - 2]
 		return rename(name)
@@ -101,7 +99,7 @@ module.exports = function(gulp, config){
 
 
 	// Removes readme
-	gulp.task('clean:readme', function(){
+	gulp.task('clean:readme', () => {
 		return gulp.src('README.md')
 			.pipe(vinylPaths(del))
 	})
@@ -109,14 +107,14 @@ module.exports = function(gulp, config){
 
 
 	// Change description of project
-	gulp.task('description', function(){
+	gulp.task('description', () => {
 		let desc = process.argv[process.argv.length - 1]
 		return gulp.src([
 				'./package.json',
 				'./bower.json'
 			])
 			.pipe(plumber(config.onError))
-			.pipe(jsonEditor(function(json){
+			.pipe(jsonEditor(json => {
 				json.description = desc
 				return json
 			}))

@@ -18,8 +18,14 @@ layout: compress
 
 		<header>
 			<nav>
-				<a href="/">Home</a>
-				<a href="{% link about.md %}">About</a>
+				<ul>
+					<li>
+						<a href="{{ site.baseurl }}/">Home</a>
+					</li>
+					<li>
+						<a href="{{ site.baseurl }}{% link _pages/about.md %}">About</a>
+					</li>
+				</ul>
 			</nav>
 		</header>
 

@@ -1,6 +1,6 @@
 // Preprocesses JavaScript for development and production
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 
 	gulp.task('script', cb => {
 
@@ -34,22 +34,22 @@ module.exports = function(gulp, config){
 
 			const tasks = files.map(entry => {
 				return browserify(entry, browserifyOpts)
-				.transform(babelify, babelifyOpts)
-				.bundle()
-				.on('error', config.onError.errorHandler)
-				.pipe(stream(entry.replace(`${config.src}/`, '')))
-				.pipe(buffer())
-				// Gulp pipe starts here
-				.pipe(plumber(config.onError))
-				.pipe(sourcemaps.init(sourceMapOpts))
-				.pipe(uglify(uglifyOpts))
-				.pipe(sourcemaps.write('./'))
-				.pipe(gulp.dest(config.dist))
-				.pipe(config.notify('JavaScript processed'))
+					.transform(babelify, babelifyOpts)
+					.bundle()
+					.on('error', config.onError.errorHandler)
+					.pipe(stream(entry.replace(`${config.src}/`, '')))
+					.pipe(buffer())
+					// Gulp pipe starts here
+					.pipe(plumber(config.onError))
+					.pipe(sourcemaps.init(sourceMapOpts))
+					.pipe(uglify(uglifyOpts))
+					.pipe(sourcemaps.write('./'))
+					.pipe(gulp.dest(config.dist))
 			})
 
 			merge(tasks)
 				.on('end', cb)
+				.pipe(config.notify('JavaScript processed'))
 
 		})
 	})

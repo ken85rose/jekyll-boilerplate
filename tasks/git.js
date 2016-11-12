@@ -1,13 +1,13 @@
 // Git functions
 'use strict'
-module.exports = function(gulp, config){
+module.exports = (gulp, config) => {
 
 	const shell = require('gulp-shell')
 	const runSequence = require('run-sequence')
 	const del = require('del')
 	const vinylPaths = require('vinyl-paths')
 
-	gulp.task('git:init', function(){
+	gulp.task('git:init', () => {
 		return gulp.src('')
 			.pipe(shell('git remote add origin ' + require('./package.json').repository.url, {
 				verbose: true,
@@ -25,7 +25,7 @@ module.exports = function(gulp, config){
 
 
 
-	gulp.task('git:commit', function(){
+	gulp.task('git:commit', () => {
 		let msg = process.argv[process.argv.length - 1]
 		return gulp.src('')
 			.pipe(shell('git add .', {
@@ -37,7 +37,7 @@ module.exports = function(gulp, config){
 	})
 	gulp.task('commit', ['git:commit'])
 
-	gulp.task('git:push', function(){
+	gulp.task('git:push', () => {
 		// Increment version and push
 		const bump = require('gulp-bump')
 
@@ -57,7 +57,7 @@ module.exports = function(gulp, config){
 				verbose: true,
 			}))
 	})
-	gulp.task('push', function(cb){
+	gulp.task('push', cb => {
 		runSequence(
 			'build',
 			['git:push'],
@@ -65,7 +65,7 @@ module.exports = function(gulp, config){
 		)
 	})
 
-	gulp.task('git:release', function(){
+	gulp.task('git:release', () => {
 		// Increment version and push
 		const bump = require('gulp-bump')
 		return gulp.src('./package.json')
@@ -85,7 +85,7 @@ module.exports = function(gulp, config){
 			}))
 
 	})
-	gulp.task('git:majorrelease', function(){
+	gulp.task('git:majorrelease', () => {
 		// Increment version and push
 		const bump = require('gulp-bump')
 		return gulp.src('./package.json')
@@ -107,7 +107,7 @@ module.exports = function(gulp, config){
 	})
 
 	// Removes .git directory
-	gulp.task('git:clean', function(){
+	gulp.task('git:clean', () => {
 		return gulp.src('.git')
 			.pipe(vinylPaths(del))
 	})

@@ -1,7 +1,7 @@
 {
-  "name": "jekyll-gulp-boilerplate",
+  "name": "jekyll-boilerplate",
   "version": "0.0.0",
-  "description": "",
+  "description": "A Jekyll boilerplate with Gulp tasks.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,6 +27,7 @@
     "gitignore-globs": "^0.1.1",
     "glob": "^7.1.1",
     "glob-all": "^3.0.3",
+    "gray-matter": "^2.1.0",
     "gulp": "^3.9.1",
     "gulp-add-src": "^0.2.0",
     "gulp-autoprefixer": "^3.1.0",
@@ -77,5 +78,6 @@
     "vinyl-ftp": "^0.4.5",
     "vinyl-paths": "^2.1.0",
     "vinyl-source-stream": "^1.1.0"
-  }
+  },
+  "dependencies": {}
 }
