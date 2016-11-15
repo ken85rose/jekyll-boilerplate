@@ -22,7 +22,7 @@ module.exports = (gulp, config) => {
 			sourceMaps: true
 		}
 		const uglifyOpts = {
-			preserveComments: 'some',
+			//preserveComments: 'some',
 			outSourceMap: true
 		}
 		const sourceMapOpts = {

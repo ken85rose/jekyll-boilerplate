@@ -3,7 +3,7 @@
 module.exports = (gulp, config) => {
 
 
-	gulp.task('sync', () => {
+	gulp.task('server', () => {
 		const fs = require('fs')
 		const url = require('url')
 		const path = require('path')
@@ -28,8 +28,7 @@ module.exports = (gulp, config) => {
 						if(fileName[fileName.length - 1] === '/'){
 							fileName = fileName.slice(0, -1)
 						}
-						const check = `${folder + fileName}.html`
-						const fileExists = fs.existsSync(check)
+						const fileExists = fs.existsSync(`${folder + fileName}.html`)
 						if(fileExists && fileName.indexOf("browser-sync-client") < 0){
 							if(fileName[fileName.length - 1] === '/'){
 								fileName = fileName.slice(0, -1)

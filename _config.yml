@@ -11,6 +11,7 @@
 title: Jekyll Gulp Boilerplate
 email: krose@escaladesports.com
 description: Jekyll Gulp Boilerplate description
+# logo: /img/logo.png
 baseurl: "" # the subpath of your site
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
@@ -42,6 +43,7 @@ exclude:
   - node_modules
   - bower_components
   - README.md
+
 
 compress_html:
   clippings: all

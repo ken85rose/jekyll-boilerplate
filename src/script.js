@@ -1,8 +1,10 @@
-// Fastclick to fix iOS tap delay
+// Polyfills
 require('fastclick')(document.body)
-
-// Support for SVG maps
 require('svg4everybody/dist/svg4everybody')()
+require('picturefill')
+
+// Jekyll search
+require('simple-jekyll-search/src/index.js')
 
 // Only target "HTML5 browsers"
 if('querySelector' in document && 'localStorage' in window && 'addEventListener' in window) {
@@ -15,5 +17,12 @@ if('querySelector' in document && 'localStorage' in window && 'addEventListener'
 
 	// Touch-screen specific code
 	require('./script/touch')()
+
+	// Search input
+	SimpleJekyllSearch({
+		searchInput: document.getElementById('searchInput'),
+		resultsContainer: document.getElementById('resultsCont'),
+		json: '/search.json'
+	})
 
 }

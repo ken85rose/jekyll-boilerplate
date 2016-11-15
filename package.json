@@ -1,7 +1,7 @@
 {
-  "name": "jekyll-boilerplate",
+  "name": "jekyll-gulp-boilerplate",
   "version": "0.0.0",
-  "description": "A Jekyll boilerplate with Gulp tasks.",
+  "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -72,7 +72,9 @@
     "nodemon": "^1.11.0",
     "normalize-css": "^2.3.1",
     "open": "0.0.5",
+    "picturefill": "^3.0.2",
     "run-sequence": "^1.2.1",
+    "simple-jekyll-search": "^1.1.5",
     "svg4everybody": "^2.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-ftp": "^0.4.5",

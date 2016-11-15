@@ -7,34 +7,60 @@ layout: compress
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title>{% if page.title %} {{ page.title }} | {% endif %} {{ site.name }}</title>
+		<!-- page_title -->
+		{% if page.tag %}
+			{% capture page_title %}"{{ page.tag | capitalize_all }}" Tags | {{ site.title }}{% endcapture %}
+		{% elsif page.title %}
+			{% capture page_title %}{{ page.title }} | {{ site.title }}{% endcapture %}
+		{% else %}
+			{% assign page_title = site.title %}
+		{% endif %}
 
-		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{site.baseurl}}/feed.xml" />
-		<link rel="stylesheet" href="/style.css?{{ site.time | date: '%s%N' }}">
+		<!-- page_description -->
+		{% if page.description %}
+			{% assign page_description = page.description %}
+		{% elsif page.home %}
+			{% assign page_description = site.description %}
+		{% elsif page.title %}
+			{% capture page_description %}{{ page.content | strip_html | remove_characters | textilize | strip_newlines | truncatewords: 50 }}{% endcapture %}
+		{% else %}
+			{% assign page_description = false %}
+		{% endif %}
 
-		{% seo %}
+		<title>{{ page_title }}</title>
+		<meta property="og:title" content="{{ page_title }}" />
+		{% if page_description %}
+			<meta property="og:description" itemprop="description" content="{{ page_description }}" />
+		{% endif %}
+
+		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="{{ site.baseurl }}/feed.xml" />
+		<link rel="stylesheet" href="{{ site.baseurl }}/style.css?{{ site.time | date: '%s%N' }}">
+
 	</head>
 	<body>
 
 		<header>
 			<nav>
 				<ul>
-					<li>
-						<a href="{{ site.baseurl }}/">Home</a>
-					</li>
-					<li>
-						<a href="{{ site.baseurl }}{% link _pages/about.md %}">About</a>
-					</li>
+				{% assign navigation_pages = site.html_pages | sort: 'navigation_weight' %}
+				{% for p in navigation_pages %}
+					{% if p.navigation_weight %}
+						<li>
+							<a href="{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
+								{% if p.title %} {{ p.title }} {% else %} Home {% endif %}
+							</a>
+						</li>
+					{% endif %}
+				{% endfor %}
 				</ul>
 			</nav>
+			<input type="text" id="searchInput" placeholder="search...">
 		</header>
 
 		{{ content }}
 
-		<footer>
-		</footer>
+		<div id="resultsCont"></div>
 
-
-		<script src="/script.js?{{ site.time | date: '%s%N' }}"></script>
+		<script src="{{ site.baseurl }}/script.js?{{ site.time | date: '%s%N' }}"></script>
 	</body>
 </html>

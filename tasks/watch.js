@@ -2,9 +2,8 @@
 'use strict'
 module.exports = (gulp, config) => {
 
-
 	// Watches files for changes
-	gulp.task('watch', () => {
+	gulp.task('watch-files', () => {
 
 		// Process source files when changed
 		gulp.watch(`${config.src}/**/*.scss`, ['style'])
@@ -26,21 +25,18 @@ module.exports = (gulp, config) => {
 		// Reload browser on file changes
 		gulp.watch(`${config.dist}/**/*.{html,js,svg,jpg,jpeg,gif,png}`, config.browserSync.reload)
 
-
-
-
 	})
 
 
 	// Watch and browser sync tasks
 	gulp.task('default', cb => {
 		const runSequence = require('run-sequence')
-		runSequence('build', ['sync-watch'], cb)
+		runSequence('build', ['watch'], cb)
 	})
 
 	// Browser sync and watch files
-	gulp.task('sync-watch', ['sync', 'watch', 'auto-reload'])
-	gulp.task('watch-sync', ['sync-watch'])
+	gulp.task('watch', ['server', 'watch-files', 'auto-reload'])
+	gulp.task('sync', ['watch'])
 
 
 	gulp.task('auto-reload', function() {
@@ -55,7 +51,7 @@ module.exports = (gulp, config) => {
 		function spawnChildren(e) {
 			const spawn = require('child_process').spawn
 			if(p) p.kill()
-			p = spawn('gulp', ['watch'], {stdio: 'inherit'})
+			p = spawn('gulp', ['watch-files'], {stdio: 'inherit'})
 		}
 
 	})
